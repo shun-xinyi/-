@@ -3,6 +3,7 @@ const Gold = require("./public/config");
 
 module.exports = defineConfig({
     transpileDependencies: true,
+    lintOnSave: false,
     devServer: {
         port: 85,
         open: true,
