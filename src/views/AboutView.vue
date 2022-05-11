@@ -2,15 +2,31 @@
     <div class="about">
         <h1>This is an about page</h1>
         <el-input v-model="input" placeholder="Please input"/>
+        <el-input v-model="input2" placeholder="Please input"/>
+        <el-input v-model="doubleCount" placeholder="Please input"/>
         <el-button type="primary" @click="inputAdd">Primary</el-button>
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { getH5Person } from '@/api/test';
 
 let input = ref(0);
+let input2 = ref(10);
+
+onMounted(()=>{
+    getPerson()
+})
+
+watch([input,input2],(newValue,oldValue)=>{
+    console.log(newValue);
+    console.log(oldValue);
+})
+
+const doubleCount = computed(() => {
+    return input2.value * 2
+})
 
 let getPerson =async ()=>{
     let result = await getH5Person({
@@ -23,7 +39,8 @@ let getPerson =async ()=>{
 
 function inputAdd() {
     input.value++;
-    getPerson();
+    input2.value--;
 }
+
 
 </script>
