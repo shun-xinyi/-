@@ -6,18 +6,24 @@
     </div>
 </template>
 
-<script>
-export default {
-    data(){
-        return{
-            input: 0
-        }
-    },
-    methods:{
-        inputAdd(){
-            this.input++
-        }
-    }
+<script setup>
+import {ref} from 'vue';
+import { getH5Person } from '@/api/test';
+
+let input = ref(0);
+
+let getPerson =async ()=>{
+    let result = await getH5Person({
+        srcLng:'107.40',
+        srcLat:'34.45',
+        type:1
+    });
+    console.log(result);
+}
+
+function inputAdd() {
+    input.value++;
+    getPerson();
 }
 
 </script>
