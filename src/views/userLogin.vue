@@ -38,6 +38,7 @@ let formLabelAlign = reactive({
 let login = ()=>{
     store.dispatch('Login',formLabelAlign).then(()=>{
         router.push('/home');
+        console.log(store.state);
     }).catch(error=>{
         console.log(error);
     })

@@ -12,6 +12,12 @@
                     {{ item.name }}
                 </el-menu-item>
             </el-menu>
+            <el-button
+                color="#626aef"
+                plain
+                @click="logout">
+                登出
+            </el-button>
         </el-col>
         <el-col :span="20">
             <router-view/>
@@ -21,10 +27,12 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import {onMounted, ref} from 'vue';
+import { onMounted, ref} from 'vue';
+import { useStore } from "vuex";
 
 let router = useRouter();
 let route = useRoute();
+let store = useStore();
 
 let routes = ref([]);
 let cPath = ref('');
@@ -34,8 +42,16 @@ onMounted(()=>{
     cPath.value = route.path;
 })
 
-function getRoute(item){
+let getRoute = (item)=>{
     router.push(item);
+}
+
+let logout = ()=>{
+    store.dispatch('LogOut').then(()=>{
+        router.push('/login');
+    }).catch(error=>{
+        console.log(error);
+    })
 }
 </script>
 
