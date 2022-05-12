@@ -1,25 +1,28 @@
 <template>
-    <el-form
-        label-position="left"
-        label-width="100px"
-        :model="formLabelAlign"
-        style="max-width: 460px"
-    >
-        <el-form-item label="Name">
-            <el-input v-model="formLabelAlign.username" />
-        </el-form-item>
-        <el-form-item label="Activity zone">
-            <el-input v-model="formLabelAlign.password" />
-        </el-form-item>
-        <el-form-item>
-            <el-button
-                color="#626aef"
-                plain
-                @click="login">
-                登录
-            </el-button>
-        </el-form-item>
-    </el-form>
+    <div class="login-window">
+        <el-form
+            label-position="left"
+            label-width="100px"
+            :model="formLabelAlign"
+            style="max-width: 460px"
+        >
+            <el-form-item label="Name">
+                <el-input v-model="formLabelAlign.username" />
+            </el-form-item>
+            <el-form-item label="Activity zone">
+                <el-input v-model="formLabelAlign.password" />
+            </el-form-item>
+            <el-form-item>
+                <el-button
+                    color="#626aef"
+                    plain
+                    @click="login">
+                    登录
+                </el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+
 </template>
 
 <script setup>
@@ -48,5 +51,10 @@ let login = ()=>{
 </script>
 
 <style scoped>
-
+.login-window{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
 </style>
