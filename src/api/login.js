@@ -15,6 +15,13 @@ export function login(username, password, code, uuid) {
     })
 }
 
+export function getInfo() {
+    return request({
+        url: '/getInfo',
+        method: 'get'
+    })
+}
+
 // 退出方法
 export function logout() {
     return request({

@@ -27,13 +27,16 @@
             style="max-width: 460px"
         >
             <el-form-item label="Name">
-                <el-input v-model="handDetails.name" />
+                <el-input v-model="handDetails.data.name" />
             </el-form-item>
             <el-form-item label="Activity zone">
-                <el-input v-model="handDetails.address" />
+                <el-input v-model="handDetails.data.address" />
             </el-form-item>
             <el-form-item label="Activity form">
-                <el-input v-model="handDetails.date" />
+                <el-input v-model="handDetails.data.date" />
+            </el-form-item>
+            <el-form-item label="Activity form">
+                <el-button @click="changeDetails">change</el-button>
             </el-form-item>
         </el-form>
     </el-drawer>
@@ -66,14 +69,16 @@ let tableData = ref([
     },
 ]);
 let handDetails = reactive({
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    data:{}
 })
 
-function handClick(row){
+let changeDetails = ()=>{
+    handDetails.data.name = 'GALA';
+}
+
+let handClick = (row)=>{
+    handDetails.data = row
     drawer.value = true;
-    handDetails = row;
 }
 </script>
 

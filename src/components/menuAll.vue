@@ -12,14 +12,25 @@
                     {{ item.name }}
                 </el-menu-item>
             </el-menu>
-            <el-button
-                color="#626aef"
-                plain
-                @click="logout">
-                登出
-            </el-button>
+
         </el-col>
         <el-col :span="20">
+            <el-card class="box-card">
+                <template #header>
+                    <div class="card-header">
+                        <span>{{ store.getters.name }}</span>
+                        <div>
+                            <img :src="store.getters.avatar" alt="">
+                            <el-button
+                                color="#626aef"
+                                plain
+                                @click="logout">
+                                登出
+                            </el-button>
+                        </div>
+                    </div>
+                </template>
+            </el-card>
             <router-view/>
         </el-col>
     </el-row>
@@ -36,6 +47,7 @@ let store = useStore();
 
 let routes = ref([]);
 let cPath = ref('');
+console.log('ava',store.getters.avatar)
 
 onMounted(()=>{
     routes.value = router.getRoutes();
@@ -48,7 +60,7 @@ let getRoute = (item)=>{
 
 let logout = ()=>{
     store.dispatch('LogOut').then(()=>{
-        router.push('/login');
+        router.push('/home');
     }).catch(error=>{
         console.log(error);
     })
@@ -56,5 +68,9 @@ let logout = ()=>{
 </script>
 
 <style scoped>
-
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 </style>

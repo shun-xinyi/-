@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/login'
+import { login, logout, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const user ={
@@ -51,8 +51,7 @@ const user ={
             return new Promise((resolve, reject) => {
                 logout(state.token).then(() => {
                     commit('SET_TOKEN', '')
-                    commit('SET_ROLES', [])
-                    commit('SET_PERMISSIONS', [])
+                    commit('SET_NAME', '')
                     removeToken()
                     resolve()
                 }).catch(error => {
@@ -60,6 +59,21 @@ const user ={
                 })
             })
         },
+        GetInfo({ commit }){
+            return new Promise((resolve, reject)=>{
+                getInfo().then(res=>{
+                    console.log(res);
+                    let user = res.user;
+                    let avatar = res.avatar;
+                    commit('SET_NAME',user.userName);
+                    commit('SET_NICKNAME',user.nickName);
+                    commit('SET_AVATAR',process.env.VUE_APP_BASE_API+avatar);
+                    resolve();
+                }).catch(error=>{
+                    reject(error);
+                })
+            })
+        }
     }
 }
 
