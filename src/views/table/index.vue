@@ -54,7 +54,6 @@
 </template>
 
 <script setup>
-//引入geilist
 import { getCaseList } from "@/api/case/case";
 import { onMounted, reactive, ref } from 'vue';
 
@@ -78,7 +77,7 @@ onMounted(()=>{
 let changeDetails = ()=>{
     handDetails.data.name = 'GALA';
 }
--0000
+
 let handClick = (row)=>{
     handDetails.data = row;
     drawer.value = true;
