@@ -19,14 +19,22 @@
                 <template #header>
                     <div class="card-header">
                         <span>{{ store.getters.name }}</span>
-                        <div>
-                            <img :src="store.getters.avatar" alt="">
-                            <el-button
-                                color="#626aef"
-                                plain
-                                @click="logout">
-                                登出
-                            </el-button>
+                        <div style="height: 50px;">
+                            <el-dropdown trigger="click">
+                                <img style="width: 50px;" :src="store.getters.avatar" alt="">
+                                <template #dropdown>
+                                    <el-dropdown-menu>
+                                        <el-dropdown-item>
+                                            <el-button
+                                                color="#626aef"
+                                                plain
+                                                @click="logout">
+                                                登出
+                                            </el-button>
+                                        </el-dropdown-item>
+                                    </el-dropdown-menu>
+                                </template>
+                            </el-dropdown>
                         </div>
                     </div>
                 </template>
@@ -47,7 +55,6 @@ let store = useStore();
 
 let routes = ref([]);
 let cPath = ref('');
-console.log('ava',store.getters.avatar)
 
 onMounted(()=>{
     routes.value = router.getRoutes();
@@ -60,7 +67,7 @@ let getRoute = (item)=>{
 
 let logout = ()=>{
     store.dispatch('LogOut').then(()=>{
-        router.push('/home');
+        router.push('/login');
     }).catch(error=>{
         console.log(error);
     })

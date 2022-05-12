@@ -18,16 +18,16 @@ const user ={
             state.name = name;
         },
         SET_NICKNAME: (state,nickname)=>{
-            state.name = nickname;
+            state.nickName = nickname;
         },
         SET_AVATAR: (state,avatar)=>{
-            state.name = avatar;
+            state.avatar = avatar;
         },
         SET_ROLES: (state,roles)=>{
-            state.name = roles;
+            state.roles = roles;
         },
         SET_PERMISSIONS: (state,permissions)=>{
-            state.name = permissions;
+            state.permissions = permissions;
         },
     },
     actions:{
@@ -36,7 +36,6 @@ const user ={
             let password = userinfo.password;
             let code = userinfo.code;
             let uuid = userinfo.uuid;
-
             return new Promise((resolve, reject)=>{
                 login(username,password,code,uuid).then(res=>{
                     setToken(res.token);
@@ -64,7 +63,7 @@ const user ={
                 getInfo().then(res=>{
                     console.log(res);
                     let user = res.user;
-                    let avatar = res.avatar;
+                    let avatar = res.user.avatar;
                     commit('SET_NAME',user.userName);
                     commit('SET_NICKNAME',user.nickName);
                     commit('SET_AVATAR',process.env.VUE_APP_BASE_API+avatar);

@@ -5,6 +5,6 @@ import getters from "./getters"
 export default createStore({
     getters,
     modules: {
-        user
+        user,
     }
 })
