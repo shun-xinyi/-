@@ -54,6 +54,7 @@
 </template>
 
 <script setup>
+//引入geilist
 import { getCaseList } from "@/api/case/case";
 import { onMounted, reactive, ref } from 'vue';
 
