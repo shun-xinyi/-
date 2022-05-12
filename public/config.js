@@ -1,5 +1,5 @@
 const config = {
-    baseURL: "http://localhost:9090",
+    baseURL: "http://sxy.vaiwan.com",
     baseSOCKET: "http://localhost:9091"
 };
 exports.config = config;

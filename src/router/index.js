@@ -25,6 +25,11 @@ const routes = [
                 name: 'table',
                 component: () => import('@/views/table')
             },
+            {
+                path: 'test',
+                name: 'testTable',
+                component: () => import('@/views/testTable')
+            },
         ]
     },
     {

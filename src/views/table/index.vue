@@ -1,8 +1,8 @@
 <template>
     <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="date" label="Date" width="180" />
-        <el-table-column prop="name" label="Name" width="180" />
-        <el-table-column prop="address" label="Address" />
+        <el-table-column prop="createTime" label="Date" width="180" />
+        <el-table-column prop="ownerPhone" label="Name" width="180" />
+        <el-table-column prop="assignPersonName" label="Address" />
         <el-table-column fixed="right" label="操作" width="120">
             <template #default="scope">
                 <el-button
@@ -14,6 +14,17 @@
             </template>
         </el-table-column>
     </el-table>
+
+    <el-pagination
+        v-model:currentPage="queryParams.pageNum"
+        v-model:page-size="queryParams.pageSize"
+        :page-sizes="[10, 20, 30, 40, 50]"
+        :background="true"
+        layout="sizes, prev, pager, next"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    />
 
     <el-drawer
         v-model="drawer"
@@ -43,33 +54,24 @@
 </template>
 
 <script setup>
-import {reactive, ref} from 'vue';
+import { getCaseList } from "@/api/case/case";
+import { onMounted, reactive, ref } from 'vue';
 
 let drawer = ref(false);
-let tableData = ref([
-    {
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-02',
-        name: 'Jerry',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-04',
-        name: 'Job',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Bob',
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]);
+
+let tableData = ref([]);
 let handDetails = reactive({
     data:{}
+})
+let queryParams = reactive({
+    pageNum: 1,
+    pageSize: 10
+});
+
+let total = ref(0);
+
+onMounted(()=>{
+    getList();
 })
 
 let changeDetails = ()=>{
@@ -77,9 +79,26 @@ let changeDetails = ()=>{
 }
 
 let handClick = (row)=>{
-    handDetails.data = row
+    handDetails.data = row;
     drawer.value = true;
 }
+
+let getList = async ()=>{
+    let result = await getCaseList(queryParams);
+    tableData.value = result.rows;
+    total.value = result.total;
+}
+
+let handleSizeChange = size=>{
+    queryParams.pageSize = size;
+    getList();
+}
+
+let handleCurrentChange = num=>{
+    queryParams.pageNum = num;
+    getList();
+}
+
 </script>
 
 <style scoped>

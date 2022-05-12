@@ -26,9 +26,9 @@
 </template>
 
 <script setup>
-import {  reactive } from "vue"
+import {  reactive } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router'
 
 let store = useStore();
 let router = useRouter();
@@ -41,7 +41,6 @@ let formLabelAlign = reactive({
 let login = ()=>{
     store.dispatch('Login',formLabelAlign).then(()=>{
         router.push('/home');
-        console.log(store.state);
     }).catch(error=>{
         console.log(error);
     })
