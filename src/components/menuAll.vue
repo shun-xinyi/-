@@ -38,6 +38,7 @@
                         </div>
                     </div>
                 </template>
+                <Breadcrumb></Breadcrumb>
             </el-card>
             <router-view/>
         </el-col>
@@ -46,19 +47,21 @@
 
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
-import { onMounted, ref} from 'vue';
+import { onMounted, ref, computed} from 'vue';
 import { useStore } from "vuex";
-
+import Breadcrumb from './Breadcrumb'
 let router = useRouter();
 let route = useRoute();
 let store = useStore();
 
 let routes = ref([]);
-let cPath = ref('');
 
 onMounted(()=>{
     routes.value = router.getRoutes();
-    cPath.value = route.path;
+})
+
+const cPath = computed(() => {
+    return route.path
 })
 
 let getRoute = (item)=>{

@@ -30,6 +30,16 @@
             </el-select>
         </el-form-item>
         <el-form-item>
+            <el-date-picker
+                v-model="timeStr"
+                type="datetimerange"
+                value-format="YYYY/MM/DD hh:mm:ss"
+                range-separator="-"
+                start-placeholder="开始时间"
+                end-placeholder="结束时间"
+            />
+        </el-form-item>
+        <el-form-item>
             <el-button
                 :icon="Search"
                 @click="search">
@@ -38,10 +48,10 @@
         </el-form-item>
     </el-form>
     <el-table :data="tableData" style="width: 100%">
-        <el-table-column prop="createTime" label="Date" width="180" />
-        <el-table-column prop="ownerPhone" label="Name" width="180" />
-        <el-table-column prop="assignPersonName" label="Address" />
-        <el-table-column fixed="right" label="操作" width="120">
+        <el-table-column  align="center" prop="createTime" label="Date" width="180" />
+        <el-table-column  align="center" prop="ownerPhone" label="Name" width="180" />
+        <el-table-column  align="center" prop="assignPersonName" label="Address" width="180" />
+        <el-table-column  align="center" fixed="right" label="操作">
             <template #default="scope">
                 <el-button
                     size="small"
@@ -76,13 +86,13 @@
             style="max-width: 460px"
         >
             <el-form-item label="Name">
-                <el-input v-model="handDetails.data.name" />
+                <el-input v-model="handDetails.data.ownerName" />
             </el-form-item>
             <el-form-item label="Activity zone">
-                <el-input v-model="handDetails.data.address" />
+                <el-input v-model="handDetails.data.ownerPhone" />
             </el-form-item>
             <el-form-item label="Activity form">
-                <el-input v-model="handDetails.data.date" />
+                <el-input v-model="handDetails.data.type" />
             </el-form-item>
             <el-form-item label="Activity form">
                 <el-button @click="changeDetails">change</el-button>
@@ -115,6 +125,7 @@ let queryParams = reactive({
 });
 
 let total = ref(0);
+let timeStr = ref([]);
 
 onMounted(()=>{
     getList();
@@ -133,6 +144,11 @@ let handClick = (row)=>{
 }
 
 let getList = async ()=>{
+    queryParams.params = {};
+    if(timeStr.value[0] && timeStr.value[1]){
+        queryParams.params['beginCreateTime'] = timeStr.value[0];
+        queryParams.params['endCreateTime'] = timeStr.value[1];
+    }
     let result = await getCaseList(queryParams);
     tableData.value = result.rows;
     total.value = result.total;
