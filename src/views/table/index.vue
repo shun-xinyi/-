@@ -92,6 +92,7 @@
 </template>
 
 <script setup>
+//测试
 import { getCaseList, listRescueType } from "@/api/case/case";
 import { onMounted, reactive, ref } from 'vue';
 import { Search } from '@element-plus/icons-vue';
