@@ -9,15 +9,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { getH5Person } from '@/api/test';
 
 let input = ref(0);
 let input2 = ref(10);
 
-onMounted(()=>{
-    getPerson()
-})
 
 watch([input,input2],(newValue,oldValue)=>{
     console.log(newValue);

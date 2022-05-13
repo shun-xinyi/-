@@ -1,9 +1,6 @@
 <template>
     <el-breadcrumb :separator-icon="ArrowRight">
         <transition-group>
-            <el-breadcrumb-item :to="{path:'/home'}" key="/home">
-                首页
-            </el-breadcrumb-item>
             <el-breadcrumb-item
                 v-for="item in levelList"
                 :key="item.path"
@@ -21,7 +18,14 @@ import {ref, watch} from 'vue';
 
 let route = useRoute();
 
-let levelList = ref([]);
+let levelList = ref([
+    {
+        path:'/home',
+        meta:{
+            title: '首页'
+        }
+    }
+]);
 
 watch(() => route,(to)=>{
     if(!levelList.value.some(item=>item.path===to.path)){
