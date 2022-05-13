@@ -11,14 +11,21 @@ router.beforeEach((to,from,next)=>{
         if(to.path === '/login'){
             next('/home');
         }else{
-            store.dispatch('GetInfo').then(()=>{
-                next();
-            }).catch(error=>{
-                store.dispatch('LogOut').then(()=>{
-                    ElMessage.error(error);
-                    next('/home');
+            if(store.getters.roles.length===0){
+                store.dispatch('GetInfo').then(()=>{
+                    store.dispatch('GenerateRoutes').then(accessRoutes=>{
+                        console.log(accessRoutes);
+                        next();
+                    })
+                }).catch(error=>{
+                    store.dispatch('LogOut').then(()=>{
+                        ElMessage.error(error);
+                        next('/login');
+                    })
                 })
-            })
+            }else{
+                next();
+            }
         }
     }else{
         if(whiteList.indexOf(to.path)!==-1){

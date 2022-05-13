@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import menu from '@/components/menuAll'
 
-const routes = [
+export const routes = [
     {
         path: '',
         name: 'menu',
