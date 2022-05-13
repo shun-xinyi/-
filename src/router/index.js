@@ -10,11 +10,17 @@ export const routes = [
             {
                 path: 'home',
                 name: 'home',
-                component: () => import( '@/views/HomeView.vue')
+                meta:{
+                    title: '首页'
+                },
+                component: () => import( '@/views/HomeView.vue'),
             },
             {
                 path: 'about',
                 name: 'about',
+                meta:{
+                    title: '关于'
+                },
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
@@ -23,11 +29,17 @@ export const routes = [
             {
                 path: 'table',
                 name: 'table',
+                meta:{
+                    title: '表格'
+                },
                 component: () => import('@/views/table')
             },
             {
                 path: 'test',
                 name: 'testTable',
+                meta:{
+                    title: '测试表格'
+                },
                 component: () => import('@/views/testTable')
             },
         ]
@@ -35,6 +47,9 @@ export const routes = [
     {
         path: '/login',
         name: 'login',
+        meta:{
+            title: '登录'
+        },
         component: () => import('@/views/userLogin')
     }
 ]

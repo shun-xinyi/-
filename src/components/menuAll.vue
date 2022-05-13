@@ -1,6 +1,6 @@
 <template>
-    <el-row>
-        <el-col :span="4">
+    <el-row :gutter="10">
+        <el-col :span="3">
             <el-menu
                 :default-active="cPath"
             >
@@ -9,12 +9,12 @@
                     :key="item.name"
                     :index="item.path"
                     @click="getRoute(item)">
-                    {{ item.name }}
+                    {{ item.meta.title }}
                 </el-menu-item>
             </el-menu>
 
         </el-col>
-        <el-col :span="20">
+        <el-col :span="21">
             <el-card class="box-card">
                 <template #header>
                     <div class="card-header">

@@ -7,3 +7,11 @@ export function getCaseList(query){
         params: query
     })
 }
+
+export function listRescueType(query) {
+    return request({
+        url: '/rescue/rescueType/list',
+        method: 'get',
+        params: query
+    })
+}

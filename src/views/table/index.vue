@@ -1,4 +1,42 @@
 <template>
+    <el-form
+        style="margin-top: 10px"
+        :model="queryParams"
+        size="small"
+        :inline="true">
+        <el-form-item label="车牌号">
+            <el-input v-model="queryParams.plate" clearable  />
+        </el-form-item>
+        <el-form-item label="调度姓名">
+            <el-input v-model="queryParams.taskUserName" clearable  />
+        </el-form-item>
+        <el-form-item label="调度电话">
+            <el-input v-model="queryParams.taskUser" clearable  />
+        </el-form-item>
+        <el-form-item label="客户电话">
+            <el-input v-model="queryParams.ownerPhone" clearable  />
+        </el-form-item>
+        <el-form-item label="客户姓名">
+            <el-input v-model="queryParams.ownerName" clearable  />
+        </el-form-item>
+        <el-form-item label="救援类型">
+            <el-select v-model="queryParams.type" clearable>
+                <el-option
+                    v-for="item in rescueTypeList"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
+                />
+            </el-select>
+        </el-form-item>
+        <el-form-item>
+            <el-button
+                :icon="Search"
+                @click="search">
+                搜索
+            </el-button>
+        </el-form-item>
+    </el-form>
     <el-table :data="tableData" style="width: 100%">
         <el-table-column prop="createTime" label="Date" width="180" />
         <el-table-column prop="ownerPhone" label="Name" width="180" />
@@ -54,24 +92,35 @@
 </template>
 
 <script setup>
-import { getCaseList } from "@/api/case/case";
+import { getCaseList, listRescueType } from "@/api/case/case";
 import { onMounted, reactive, ref } from 'vue';
+import { Search } from '@element-plus/icons-vue';
 
 let drawer = ref(false);
 
 let tableData = ref([]);
+let rescueTypeList = ref([]);
 let handDetails = reactive({
     data:{}
 })
 let queryParams = reactive({
     pageNum: 1,
-    pageSize: 10
+    pageSize: 10,
+    plate: null,
+    ownerPhone: null,
+    ownerName: null,
+    type: null,
+    taskUserName: null,
+    taskUser: null,
 });
 
 let total = ref(0);
 
 onMounted(()=>{
     getList();
+    listRescueType().then((response) => {
+        rescueTypeList.value = response.rows
+    })
 })
 
 let changeDetails = ()=>{
@@ -87,6 +136,16 @@ let getList = async ()=>{
     let result = await getCaseList(queryParams);
     tableData.value = result.rows;
     total.value = result.total;
+}
+
+let search = ()=>{
+    queryParams.pageNum = 1;
+    for (let key in queryParams) {
+        if(queryParams[key]===null || queryParams[key]===''){
+            delete queryParams[key]
+        }
+    }
+    getList();
 }
 
 let handleSizeChange = size=>{
